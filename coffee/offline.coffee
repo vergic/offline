@@ -119,7 +119,11 @@ Offline.trigger = (event) ->
 checkXHR = (xhr, onUp, onDown) ->
   checkStatus = ->
     if xhr.status and xhr.status < 12000
-      onUp()
+      if xhr.status in [400, 401, 403, 404, 500, 503]
+        #unauthorized...
+        onDown()
+      else
+        onUp()
     else
       onDown()
 

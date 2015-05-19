@@ -163,8 +163,13 @@
   checkXHR = function(xhr, onUp, onDown) {
     var checkStatus, _onerror, _onload, _onreadystatechange, _ontimeout;
     checkStatus = function() {
+      var _ref;
       if (xhr.status && xhr.status < 12000) {
-        return onUp();
+        if ((_ref = xhr.status) === 400 || _ref === 401 || _ref === 403 || _ref === 404 || _ref === 500 || _ref === 503) {
+          return onDown();
+        } else {
+          return onUp();
+        }
       } else {
         return onDown();
       }
